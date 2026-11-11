@@ -1,4 +1,4 @@
-
+import "../Styles/Login.scss"
 
 export default function Login() {
   return (
@@ -19,7 +19,6 @@ export default function Login() {
             </form>
 
             <button type="submit">Entrar</button>
-
         </section>
     </main>
   )
