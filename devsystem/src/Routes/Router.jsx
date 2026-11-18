@@ -14,7 +14,15 @@ export default function Router() {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route
+        path="/"
+        element={
+          logado === "true" 
+          ? <Navigate to="/homeLogado" />
+          : <Login/> 
+        } 
+        
+      />
 
         <Route path="/sobre" element={<Sobre />} />
 
