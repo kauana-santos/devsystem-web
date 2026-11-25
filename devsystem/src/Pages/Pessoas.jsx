@@ -4,6 +4,7 @@ import axios from 'axios'
 
 export default function Pessoas() {
     const [pessoas, setPessoas] = useState([])
+    const [pagina, setPagina] = useState(1)
 
     useEffect(()=> {
         axios.get("http://localhost:3000/pessoas").then((res) => {
@@ -11,9 +12,20 @@ export default function Pessoas() {
         })
     }, [])
 
-    useEffect(() => {
-        console.log(pessoas)
-    }, [pessoas])
+    //configuração da pagina
+    const itensPorPagina = 4;
+
+    //calcula o indice inicial dos registros da pagina atual
+    const inicio = (pagina - 1) * itensPorPagina;
+
+    //calcula o indice finl dos registros da pagina atual
+    const fim =inicio+itensPorPagina
+    // separa os registros que serão exibidos na pagina atual
+    const pessoasPagina = pessoas.slice(inicio,fim)    
+
+    //calcula Quantidade Total de paginas
+    const totalPagina = Math.ceil(pessoas.length / itensPorPagina)
+
   return (
     <main className='container pessoas'>
       <h1>Lista de pessoas</h1>
@@ -28,22 +40,27 @@ export default function Pessoas() {
             </tr>
         </thead>
         <tbody>
-            {pessoas.map((pessoa)=> (
-            <tr>
-                <td>{pessoa.id}</td>
-                <td>{pessoa.nome}</td>
-                <td>{pessoa.email}</td>
-                <td>{pessoa.telefone}</td>
+            {pessoasPagina.map(({id, nome, email, telefone})=> (
+            <tr key={id}>
+                <td>{id}</td>
+                <td>{nome}</td>
+                <td>{email}</td>
+                <td>{telefone}</td>
             </tr>
             ))}
-            <tr>
-                <td>1569</td>
-                <td>Kauana Santos</td>
-                <td>kauana@email.com</td>
-                <td>1140028922</td>
-            </tr>
         </tbody>
       </table>
+
+      <section>
+        <button 
+        onClick={()=> setPagina(pagina -1)}
+        disabled={pagina === 1}>Anterior</button>
+        <span>{" "} {pagina} de {totalPagina} {" "}</span>
+        <button 
+        onClick={()=> setPagina(pagina +1)}
+        disabled={pagina === totalPagina}
+        >Proximo</button>
+      </section>
     </main>
 
   )
