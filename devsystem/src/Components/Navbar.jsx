@@ -3,6 +3,14 @@ import "../Styles/Navbar.scss"
 
 export default function Navbar() {
   const logado = sessionStorage.getItem("logado")
+
+  function sair(){
+    //removce a autentivcacao
+    sessionStorage.removeItem(logado)
+
+    //redireciona para o login
+    window.location.replace('/')
+  }
   
   return (
     <nav>
@@ -12,7 +20,16 @@ export default function Navbar() {
                 <Link to="/">Login</Link>
               </>
             )}
+            
             <Link to="/sobre">Sobre</Link>
+            {logado === "true" &&(
+              <>
+                <button className="btn-sair" onClick={sair}>Sair</button>
+              </>
+            )}
+
+
+            
         </section>
     </nav>
   )

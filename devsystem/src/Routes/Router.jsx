@@ -32,6 +32,9 @@ export default function Router() {
             logado ? <HomeLogada /> : <Navigate to="/" replace />
           }
         />
+
+        {/* Redireciona rotas inexistentes para pagina inicial */}
+        <Route path="*" element={<Navigate to="/homeLogado" replace/>}/>
       </Routes>
     </BrowserRouter>
   );
